@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(207, 233, 233);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: left;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        label {
+            color: #333;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function showAlert(message) {
+            alert(message);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Signup</h1>
+        
+        <form method="post" action="/userSignup" id="SignupData">
+            <label for="patientName">Name: </label>
+            <input type="text" id="patientName" name="patientName" required><br>
+            <label for="patientEmail">Email: </label>
+            <input type="text" id="patientEmail" name="patientEmail" required><br>
+            <label for="patientPassword">Password: </label>
+            <input type="password" id="patientPassword" name="patientPassword" required><br>
+            <label for="patientPhone">Phone: </label>
+            <input type="text" id="patientPhone" name="patientPhone" required><br>
+            <label for="patientDob">Date of birth: </label>
+            <input type="date" id="patientDob" name="patientDob" required><br>
+            <label for="patientCity">City: </label>
+            <input type="text" id="patientCity" name="patientCity" required><br>
+            <label for="patientState">State: </label>
+            <input type="text" id="patientState" name="patientState"><br>
+            <label for="patientCountry">Country: </label>
+            <input type="text" id="patientCountry" name="patientCountry"><br>
+            <input type="submit" value="Signup">
+        </form>
+        
+        <div class="button-container">
+            <a href="/option/Patient"><button>Go to Login</button></a>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                    <script>
+                        showAlert("{{ message }}");
+                    </script>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    
+    <h3>Login failed.</h3>
+    {% if type == "Patient" %}
+    <a href="{{ url_for('users_api.handle_option', option='Patient') }}">
+        <button type="button">Try again</button>
+    {% else %}
+    <a href="{{ url_for('users_api.handle_option', option='Doctor') }}">
+        <button type="button">Try again</button>
+    </a>
+    {% endif %}
+</body>
+</html>

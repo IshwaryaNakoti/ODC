@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Application</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Online Doctor Consultation</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <!-- Profile Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Book Appointment
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
+                    <a class="dropdown-item" href="/">💬 Chat with doctor</a>
+                    <a class="dropdown-item" href="/">📹 Video Consult</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ Patient[0][3] }}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
+                    <a class="dropdown-item" href="/">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<div style="background-color: rgb(207, 233, 233); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <br>
+    <h1 style="text-align: center;">Your home for health</h1><br>
+    <h4 style="text-align: center;">Find and Book</h4>
+    <br>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-ms-12">
+                <form class="form-inline" action="/findDoctor" method="post">
+                    <div class="form-group">
+                        <select class="form-control ms-5" name="location" id="location">
+                            <option value="" disabled selected>📍Location</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Bangalore">Bangalore</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Mumbai">Mumbai</option>
+                        </select>
+                    </div>
+                    <div class="form-group ms-6">
+                        <select class="form-control" name="specialization" id="specialization">
+                            <option value="" disabled selected>Specialization</option>
+                            <option value="Ayurveda">Ayurveda</option>
+                            <option value="Cardiologist">Cardiologist</option>
+                            <option value="Dentist">Dentist</option>
+                            <option value="Dermatologist">Dermatologist</option>
+                            <option value="ENT">ENT</option>
+                            <option value="General Physician">General Physician</option>
+                            <option value="General Surgeon">General Surgeon</option>
+                            <option value="Homoeopath">Homoeopath</option>
+                            <option value="Pediatrician">Pediatrician</option>
+                        </select>
+                    </div>
+                    <div class="form-group ms-6" style="padding-left: 10px;">
+                        <input type="submit" value="Go" class="ms-1" style="background-color: aliceblue; border: 1cap;"><br>
+                    </div>
+                    <!-- Hidden fields for patient details -->
+                    <input type="hidden" name="patient_id" id="patient_id" value="{{ Patient[0][0] }}">
+                </form>
+            </div>
+        </div>
+    </div> <br><br>   
+</div>
+<style>
+    .form-container {
+        display: inline-block;
+        margin-right: 20px;
+        padding-left: 1%;
+    }
+
+    .form-container input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .form-container input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    .card {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .card-header {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-body p {
+        margin: 0;
+    }
+
+    /* Hover effect */
+    .card:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<div class="form-container">
+    <form id="bookingForm" action="/myBookings" method="post">
+        <div>
+            <input type="hidden" name="patient_id" id="doctor_id" value="{{ Patient[0][0] }}">
+            <input type="submit" value="View Accepted Appointment" id="viewAppointmentButton">
+        </div>
+    </form>
+</div>
+{% if Bookings %}
+<!-- Hidden div to display booking details -->
+<div id="bookingDetails">
+    <br><h4 style="text-align: left; padding-left: 1%;">Your Bookings</h4><br>
+    {% for booking in Bookings %}
+    <div class="card">
+        <div class="card-header">
+            Booking ID: {{ booking[0] }}
+        </div>
+        <div class="card-body">
+            <p>Doctor ID: {{ booking[1] }}</p>
+            <p>Date: {{ booking[3] }}</p>
+            <p>Time: {{ booking[4] }}</p>
+            <p>Status: {{ booking[6] }}</p>
+            {% if booking[6] == 'confirmed' %}
+                <button class="btn btn-primary join-room-btn" data-booking-id="{{ booking[0] }}">Join Room with booking Id</button>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<script>
+    // Show booking details when the button is clicked
+    document.getElementById("viewAppointmentButton").addEventListener("click", function() {
+        document.getElementById("bookingDetails").style.display = "block";
+    });
+
+    // Add event listener to "Join Room" buttons
+    var joinRoomButtons = document.querySelectorAll(".join-room-btn");
+    joinRoomButtons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            var bookingId = this.getAttribute("data-booking-id");
+            window.location.href = "/joinRoom";
+        });
+    });
+</script>
+
+
+</body>
+</html>

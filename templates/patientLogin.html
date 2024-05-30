@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color:rgb(207, 233, 233);
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+
+            h1 {
+                color: #333;
+                margin-top: 70px;
+            }
+
+            form {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 7px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                display:inline-block;
+                margin-top: 20px;
+            }
+
+            label {
+                color: #333;
+                display:flex;
+                margin-bottom: 10px;
+            }
+
+            input[type="text"],
+            input[type="password"] {
+                width: 93%;
+                padding: 10px;
+                margin-bottom: 20px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+
+            input[type="submit"] {
+                background-color: #007BFF;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                transition: background-color 0.3s;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #0056b3;
+            }
+
+            div {
+                margin-top: 20px;
+            }
+
+            a {
+                text-decoration: none;
+                margin: 0 10px;
+            }
+
+            button {
+                background-color: #007BFF;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                transition: background-color 0.3s;
+            }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>
+            Patient Login
+        </h1>
+        <div>
+            <form method="post" action="/login">
+                <label for="patientEmail">Email: </label>
+                <input type="text" id="patientEmail" name="patientEmail" required><br><br>
+                <label for="patientPassword">Password: </label>
+                <input type="password" id="patientPassword" name="patientPassword" required><br><br>
+                <input type="submit" value="Login"><br><br>
+            </form>
+        </div>
+        <div>
+            <a href="patientSignup"><button type="button">New user? Signup</button></a>
+            <a href="/"><button>Go back</button></a>
+        </div>
+    </body>
+</html>

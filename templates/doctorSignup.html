@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <script>
+        function showAlert(message) {
+            alert(message);
+        }
+    </script>
+    
+</head>
+<body>
+    <h1>Doctor Signup</h1>
+    <form method="post" action="/doctorSignupDetails" id="DoctorSignupData">
+        <label for="doctorName">Name: </label>
+        <input type="text" id="doctorName" name="doctorName" required><br>
+        <label for="doctorEmail">Email: </label>
+        <input type="text" id="doctorEmail" name="doctorEmail" required><br>
+        <label for="doctorPassword">Password: </label>
+        <input type="password" id="doctorPassword" name="doctorPassword" required><br>
+        <label for="doctorPhone">Phone: </label>
+        <input type="text" id="doctorPhone" name="doctorPhone" required><br>
+        <label for="doctorExperience">Experience: </label>
+        <input type="number" id="doctorExperience" name="doctorExperience" required><label for="">yrs</label><br><br>
+        <label for="doctorSpecialization">Specialization: </label>
+        <select id="doctorSpecialization" name="doctorSpecialization" multiple required>
+            <option value="Ayurveda">Ayurveda</option>
+            <option value="Cardiologist">Cardiologist</option>
+            <option value="Dentist">Dentist</option>
+            <option value="Dermatologist">Dermatologist</option>
+            <option value="ENT">ENT</option>
+            <option value="General Physician">General Physician</option>
+            <option value="General Surgeon">General Surgeon</option>
+            <option value="Homoeopath">Homoeopath</option>
+            <option value="Pediatrician">Pediatrician</option>
+        </select><br><br>
+        <label for="doctorCity">City: </label>
+        <input type="text" id="doctorCity" name="doctorCity" required><br>
+        <label for="doctorState">State: </label>
+        <input type="text" id="doctorState" name="doctorState"><br>
+        <label for="doctorCountry">Country: </label>
+        <input type="text" id="doctorCountry" name="doctorCountry"><br>
+        <input type="submit" value="Signup">
+    </form>
+    
+    <a href="/option/Doctor"><button>Go to Login</button></a>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+                <script>
+                    showAlert("{{ message }}");
+                </script>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>

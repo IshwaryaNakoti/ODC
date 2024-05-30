@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>List of Doctors</title>
+    <style>
+        .doctor-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            margin-bottom: 20px;
+        }
+        .doctor-details {
+            margin-bottom: 15px;
+        }
+        .doctor-buttons {
+            text-align: right;
+        }
+        .hidden {
+            display: none;
+        }
+        .status-circle {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Online Doctor Consultation</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <!-- Profile Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Book Appointment
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
+                        <a class="dropdown-item" href="/">💬 Chat with doctor</a>
+                        <a class="dropdown-item" href="/">📹 Video Consult</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ Patient[0][3] }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
+                        <a class="dropdown-item" href="/">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container"><br>
+        <h3>Doctors List</h3>
+        <p>Location: {{ location }}</p>
+        <p>Specialization: {{ specialization }}</p>
+        
+        <div class="row">
+            {% for doctor in listOfDoctors %}
+            <div class="col-md-6">
+                <div class="doctor-card">
+                    <div class="doctor-details">
+                        <h4>{{ doctor[1] }} </h4>
+                        <p><strong>Specialization:</strong> {{ specialization }}</p>
+                        <p><strong>Experience:</strong> {{ doctor[4] }} years</p>
+                        <p><strong>Phone:</strong> {{ doctor[3] }}</p>
+                        <p><strong>Address:</strong> {{ doctor[5] }}, {{ doctor[6] }}, {{ doctor[7] }}</p>
+                    </div>
+                    <div class="doctor-buttons">
+                        <button class="btn btn-primary book-appointment-btn">Book Appointment</button>
+                    </div>
+                    <div class="time-slots hidden">
+                        <h5>Select a Time Slot</h5>
+                        <form action="/myBookings" method="POST">
+                            <div class="form-check">
+                                <input class="form-check-input" type="date" name="date" id="date" requierd><br><br>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="timeslot" id="timeslot" value="09:00 AM - 09:30 AM">
+                                <label class="form-check-label">09:00 AM - 09:30 AM</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="timeslot" id="timeslot" value="10:00 AM - 10:30 AM">
+                                <label class="form-check-label">10:00 AM - 10:30 AM</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="timeslot" id="timeslot" value="10:30 AM - 11:00 AM">
+                                <label class="form-check-label">10:30 AM - 11:00 AM</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="timeslot" id="timeslot" value="11:15 AM - 11:30 AM">
+                                <label class="form-check-label">11:15 AM - 11:30 AM</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="timeslot" id="timeslot" value="11:45 AM - 11:00 AM">
+                                <label class="form-check-label">11:45 AM - 12:15 PM</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="timeslot" id="timeslot" value="12:15 PM - 12:30 PM">
+                                <label class="form-check-label">12:15 PM - 12:30 PM</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="comment">Comment:</label>
+                                <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                            </div>
+                            <input type="hidden" name="doctor_id" id="doctor_id" value="{{doctor[0]}}">
+                            <input type="hidden" name="patient_id" id="patient_id" value="{{Patient[0][0]}}">
+                            <button type="submit" class="btn btn-success">Confirm Booking</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        
+        document.querySelectorAll('.book-appointment-btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var timeSlotsDiv = this.parentElement.nextElementSibling;
+                timeSlotsDiv.classList.toggle('hidden');
+            });
+        });
+    </script>    
+</body>
+</html>
